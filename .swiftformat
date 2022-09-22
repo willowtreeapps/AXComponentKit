@@ -1,0 +1,4 @@
+--swiftversion 5.7
+--wrapparameters before-first
+--wraparguments before-first
+--header ""
