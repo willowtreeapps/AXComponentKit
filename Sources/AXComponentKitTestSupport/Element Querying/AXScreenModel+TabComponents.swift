@@ -14,11 +14,11 @@ public extension AXScreenModel {
         file: StaticString = #file,
         line: UInt = #line
     ) async -> XCUIElement where Screen: AXScreenModel {
-        let element = unsafeElement(path, file: file, line: line)
+        let element = assumedElement(path, file: file, line: line)
         return element
     }
 
-    static func unsafeElement<Screen>(
+    static func assumedElement<Screen>(
         _ path: KeyPath<Self, AXTabComponent<Screen>>,
         file: StaticString = #file,
         line: UInt = #line

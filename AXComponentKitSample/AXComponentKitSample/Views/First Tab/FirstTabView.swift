@@ -9,16 +9,15 @@ struct FirstTabView: View {
         NavigationStack(path: $path) {
             VStack {
                 Button("Push Detail") {
-                    // Do stuff
-                    path.append(DetailScreenView())
+                    path.append(0)
                 }
                 .buttonStyle(.borderedProminent)
                 .automationComponent(\FirstTabScreen.detailButton)
             }
             .automationScreen(FirstTabScreen.self)
             .navigationTitle("First Tab")
-            .navigationDestination(for: DetailScreenView.self) { view in
-                view
+            .navigationDestination(for: Int.self) { _ in
+                DetailView()
             }
         }
     }

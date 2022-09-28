@@ -15,7 +15,7 @@ public extension AXScreenModel {
         line: UInt = #line
     ) async -> XCUIElement where Value: AXDynamicValue {
         let identifier = Self.component(path, value: value).id
-        let element = unsafeElement(matching: identifier)
+        let element = assumedElement(matching: identifier)
         let message = "Element not found with identifier: \"\(identifier)\""
         return element.awaitingExistence(timeout: timeout, message, file: file, line: line)
     }
@@ -31,7 +31,7 @@ public extension AXScreenModel {
         line: UInt = #line
     ) async -> XCUIElement where Value: StringProtocol {
         let identifier = Self.component(path, value: value).id
-        let element = unsafeElement(matching: identifier)
+        let element = assumedElement(matching: identifier)
         let message = "Element not found with identifier: \"\(identifier)\""
         return element.awaitingExistence(timeout: timeout, message, file: file, line: line)
     }
@@ -47,7 +47,7 @@ public extension AXScreenModel {
         line: UInt = #line
     ) async -> XCUIElement where Value: SignedInteger {
         let identifier = Self.component(path, value: value).id
-        let element = unsafeElement(matching: identifier)
+        let element = assumedElement(matching: identifier)
         let message = "Element not found with identifier: \"\(identifier)\""
         return element.awaitingExistence(timeout: timeout, message, file: file, line: line)
     }
@@ -63,7 +63,7 @@ public extension AXScreenModel {
         line: UInt = #line
     ) async -> XCUIElement where Value: UnsignedInteger {
         let identifier = Self.component(path, value: value).id
-        let element = unsafeElement(matching: identifier)
+        let element = assumedElement(matching: identifier)
         let message = "Element not found with identifier: \"\(identifier)\""
         return element.awaitingExistence(timeout: timeout, message, file: file, line: line)
     }

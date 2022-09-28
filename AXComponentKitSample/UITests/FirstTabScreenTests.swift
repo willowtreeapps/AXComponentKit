@@ -10,9 +10,9 @@ final class UITests: XCTestCase {
     func testFirstPageElementsExist() async {
         await FirstTabScreen.exists()
 
-        let btn = await FirstTabScreen.element(\.detailButton)
+        await FirstTabScreen.element(\.detailButton)
 
-        let button = FirstTabScreen.unsafeElement(\.detailButton)
+        let button = FirstTabScreen.assumedElement(\.detailButton)
 
         while !button.exists {
             XCUIApplication().scroll(byDeltaX: 0, deltaY: 10)
