@@ -20,7 +20,6 @@ final class UITests: XCTestCase {
     }
 
     func testCanNavigateToDetailScreen() async {
-        await FirstTabScreen.Navigator()
-            .navigateToDetailScreen()
+        await FirstTabScreen.navigateToDetailScreen()
     }
 }

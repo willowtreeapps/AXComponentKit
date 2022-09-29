@@ -1,4 +1,4 @@
 import AXComponentKitTestSupport
 import Foundation
 
-extension FirstTabScreen: RootTabBarNavigable { }
+extension FirstTabScreen: RootTabBarNavigable {}

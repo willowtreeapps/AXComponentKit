@@ -4,7 +4,6 @@ import XCTest
 
 @MainActor
 public extension AXScreenModel {
-
     static func assumedElement(
         _ path: KeyPath<Self, AXComponent>
     ) -> XCUIElement {
@@ -35,8 +34,8 @@ public extension AXScreenModel {
     static func assumedElement<Value>(
         _ path: KeyPath<Self, AXDynamicComponent<Value>>,
         value: Value,
-        file: StaticString = #file,
-        line: UInt = #line
+        file _: StaticString = #file,
+        line _: UInt = #line
     ) -> XCUIElement where Value: StringProtocol {
         let identifier = Self.component(path, value: value).id
         let element = assumedElement(matching: identifier)
@@ -48,8 +47,8 @@ public extension AXScreenModel {
     static func assumedElement<Value>(
         _ path: KeyPath<Self, AXDynamicComponent<Value>>,
         value: Value,
-        file: StaticString = #file,
-        line: UInt = #line
+        file _: StaticString = #file,
+        line _: UInt = #line
     ) -> XCUIElement where Value: SignedInteger {
         let identifier = Self.component(path, value: value).id
         let element = assumedElement(matching: identifier)
@@ -61,8 +60,8 @@ public extension AXScreenModel {
     static func assumedElement<Value>(
         _ path: KeyPath<Self, AXDynamicComponent<Value>>,
         value: Value,
-        file: StaticString = #file,
-        line: UInt = #line
+        file _: StaticString = #file,
+        line _: UInt = #line
     ) -> XCUIElement where Value: UnsignedInteger {
         let identifier = Self.component(path, value: value).id
         let element = assumedElement(matching: identifier)

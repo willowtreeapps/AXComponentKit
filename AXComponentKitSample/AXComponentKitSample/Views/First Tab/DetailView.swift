@@ -2,7 +2,6 @@ import AXComponentKit
 import SwiftUI
 
 struct DetailView: View {
-
     private(set) var title = "Hello, World!"
 
     var body: some View {

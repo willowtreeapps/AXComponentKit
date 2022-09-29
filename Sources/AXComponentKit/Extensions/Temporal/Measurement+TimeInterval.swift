@@ -1,6 +1,6 @@
 import Foundation
 
-extension Measurement<UnitDuration>: Sendable {}
+extension Measurement: Sendable {}
 
 public extension Measurement where UnitType == UnitDuration {
     static func milliseconds(_ duration: Double) -> Self {

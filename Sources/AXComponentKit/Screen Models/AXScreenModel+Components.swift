@@ -9,6 +9,14 @@ public extension AXScreenModel {
         Self()[keyPath: path]
     }
 
+    // MARK: ScrollView
+
+    static func component(
+        _ path: KeyPath<Self, AXScrollView>
+    ) -> AXComponent {
+        .init(stringLiteral: Self()[keyPath: path].id)
+    }
+
     // MARK: AXDynamicValue
 
     static func component<Value>(

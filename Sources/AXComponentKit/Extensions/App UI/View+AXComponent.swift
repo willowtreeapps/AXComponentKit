@@ -11,3 +11,19 @@ public extension View {
         accessibilityIdentifier(component?.id ?? "undefined")
     }
 }
+
+// MARK: AXScrollView
+
+public extension View {
+    func automationScrollView<Model>(
+        _ path: KeyPath<Model, AXScrollView>
+    ) -> some View where Model: AXScreenModel {
+        accessibilityIdentifier(Model()[keyPath: path].id)
+            .accessibilityElement(children: .contain)
+    }
+
+    func automationScrollView(_ component: AXScrollView?) -> some View {
+        accessibilityIdentifier(component?.id ?? "undefined")
+            .accessibilityElement(children: .contain)
+    }
+}

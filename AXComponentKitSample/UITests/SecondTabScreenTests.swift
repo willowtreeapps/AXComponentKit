@@ -1,19 +1,11 @@
-//
-//  SecondTabScreenTests.swift
-//  UITests
-//
-//  Created by Chris Stroud on 9/28/22.
-//
-
 import XCTest
 
 @MainActor
 final class SecondTabScreenTests: XCTestCase {
-
     override func setUp() {
         XCUIApplication().launch()
         Task {
-            await FirstTabScreen.Navigator().navigateToTab(\.secondTab)
+            await FirstTabScreen.navigate(toTab: \.second)
         }
     }
 
@@ -23,12 +15,10 @@ final class SecondTabScreenTests: XCTestCase {
     }
 
     func testCanNavigateToDetailScreen() async {
-        let navigator = SecondTabScreen.Navigator()
-        await navigator.navigateToItem(at: 3)
+        await SecondTabScreen.navigate(toItem: 3)
     }
 
     func testCanScrollDownAndNavigate() async {
-        let navigator = SecondTabScreen.Navigator()
-        await navigator.navigateToItem(at: 2)
+        await SecondTabScreen.navigate(toItem: 200)
     }
 }
