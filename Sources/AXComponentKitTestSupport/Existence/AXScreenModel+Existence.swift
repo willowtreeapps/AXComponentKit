@@ -3,14 +3,14 @@ import Foundation
 import XCTest
 
 @MainActor
-public extension AXScreenModel {
+public extension AXScreen {
     static func exists(
         timeout: Measurement<UnitDuration> = .seconds(10),
         _ message: @autoclosure () -> String? = nil,
         file: StaticString = #file,
         line: UInt = #line
-    ) async {
-        _ = XCUIApplication()
+    ) async throws {
+        _ = try XCUIApplication()
             .descendants(matching: .any)
             .matching(identifier: screenIdentifier)
             .firstMatch

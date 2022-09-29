@@ -8,10 +8,10 @@ internal extension XCUIElement {
         _ message: @autoclosure () -> String? = nil,
         file: StaticString = #file,
         line: UInt = #line
-    ) -> Self {
+    ) throws -> Self {
         if !waitForExistence(timeout: timeout.timeInterval) {
             let output = message() ?? "Element not found matching identifier: \"\(identifier)\""
-            XCTFail(output, file: file, line: line)
+            throw AXFailure(output, file: file, line: line)
         }
         return self
     }

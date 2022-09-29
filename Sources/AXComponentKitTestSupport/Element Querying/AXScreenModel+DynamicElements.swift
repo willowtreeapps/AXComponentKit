@@ -3,7 +3,7 @@ import Foundation
 import XCTest
 
 @MainActor
-public extension AXScreenModel {
+public extension AXScreen {
     // MARK: AXDynamicValue
 
     @discardableResult
@@ -13,11 +13,11 @@ public extension AXScreenModel {
         timeout: Measurement<UnitDuration> = .seconds(10),
         file: StaticString = #file,
         line: UInt = #line
-    ) async -> XCUIElement where Value: AXDynamicValue {
+    ) async throws -> XCUIElement where Value: AXDynamicValue {
         let identifier = Self.component(path, value: value).id
-        let element = assumedElement(matching: identifier)
+        let element = assumedElement(matching: identifier, file: file, line: line)
         let message = "Element not found with identifier: \"\(identifier)\""
-        return element.awaitingExistence(timeout: timeout, message, file: file, line: line)
+        return try element.awaitingExistence(timeout: timeout, message, file: file, line: line)
     }
 
     // MARK: StringProtocol
@@ -29,11 +29,11 @@ public extension AXScreenModel {
         timeout: Measurement<UnitDuration> = .seconds(10),
         file: StaticString = #file,
         line: UInt = #line
-    ) async -> XCUIElement where Value: StringProtocol {
+    ) async throws -> XCUIElement where Value: StringProtocol {
         let identifier = Self.component(path, value: value).id
-        let element = assumedElement(matching: identifier)
+        let element = assumedElement(matching: identifier, file: file, line: line)
         let message = "Element not found with identifier: \"\(identifier)\""
-        return element.awaitingExistence(timeout: timeout, message, file: file, line: line)
+        return try element.awaitingExistence(timeout: timeout, message, file: file, line: line)
     }
 
     // MARK: SignedInteger
@@ -45,11 +45,11 @@ public extension AXScreenModel {
         timeout: Measurement<UnitDuration> = .seconds(10),
         file: StaticString = #file,
         line: UInt = #line
-    ) async -> XCUIElement where Value: SignedInteger {
+    ) async throws -> XCUIElement where Value: SignedInteger {
         let identifier = Self.component(path, value: value).id
-        let element = assumedElement(matching: identifier)
+        let element = assumedElement(matching: identifier, file: file, line: line)
         let message = "Element not found with identifier: \"\(identifier)\""
-        return element.awaitingExistence(timeout: timeout, message, file: file, line: line)
+        return try element.awaitingExistence(timeout: timeout, message, file: file, line: line)
     }
 
     // MARK: UnsignedInteger
@@ -61,10 +61,10 @@ public extension AXScreenModel {
         timeout: Measurement<UnitDuration> = .seconds(10),
         file: StaticString = #file,
         line: UInt = #line
-    ) async -> XCUIElement where Value: UnsignedInteger {
+    ) async throws -> XCUIElement where Value: UnsignedInteger {
         let identifier = Self.component(path, value: value).id
-        let element = assumedElement(matching: identifier)
+        let element = assumedElement(matching: identifier, file: file, line: line)
         let message = "Element not found with identifier: \"\(identifier)\""
-        return element.awaitingExistence(timeout: timeout, message, file: file, line: line)
+        return try element.awaitingExistence(timeout: timeout, message, file: file, line: line)
     }
 }

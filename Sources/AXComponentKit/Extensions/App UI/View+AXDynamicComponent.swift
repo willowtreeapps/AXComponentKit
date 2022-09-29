@@ -6,7 +6,7 @@ public extension View {
     func automationComponent<Model, Value>(
         _ path: KeyPath<Model, AXDynamicComponent<Value>>,
         value: Value
-    ) -> some View where Model: AXScreenModel, Value: AXDynamicValue {
+    ) -> some View where Model: AXScreen, Value: AXDynamicValue {
         accessibilityIdentifier(Model()[keyPath: path].resolve(value).id)
     }
 
@@ -22,7 +22,7 @@ public extension View {
     func automationComponent<Model, Value>(
         _ path: KeyPath<Model, AXDynamicComponent<Value>>,
         value: Value
-    ) -> some View where Model: AXScreenModel, Value: StringProtocol {
+    ) -> some View where Model: AXScreen, Value: StringProtocol {
         accessibilityIdentifier(Model()[keyPath: path].resolve(value).id)
     }
 
@@ -38,7 +38,7 @@ public extension View {
     func automationComponent<Model, Value>(
         _ path: KeyPath<Model, AXDynamicComponent<Value>>,
         value: Value
-    ) -> some View where Model: AXScreenModel, Value: SignedInteger {
+    ) -> some View where Model: AXScreen, Value: SignedInteger {
         accessibilityIdentifier(Model()[keyPath: path].resolve(value).id)
     }
 
@@ -54,7 +54,7 @@ public extension View {
     func automationComponent<Model, Value>(
         _ path: KeyPath<Model, AXDynamicComponent<Value>>,
         value: Value
-    ) -> some View where Model: AXScreenModel, Value: UnsignedInteger {
+    ) -> some View where Model: AXScreen, Value: UnsignedInteger {
         accessibilityIdentifier(Model()[keyPath: path].resolve(value).id)
     }
 

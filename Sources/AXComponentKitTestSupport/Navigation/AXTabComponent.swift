@@ -1,7 +1,7 @@
 import AXComponentKit
 import Foundation
 
-public struct AXTabComponent<Content> where Content: AXScreenModel {
+public struct AXTabComponent<Content> where Content: AXScreen {
     let name: String
     let index: UInt
 

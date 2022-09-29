@@ -3,7 +3,7 @@ import Foundation
 import XCTest
 
 @MainActor
-public extension AXScreenModel {
+public extension AXScreen {
     // TODO: Make another pass with fresh eyes to make doubly sure
     // this tab query can't wait for existence
 
@@ -13,8 +13,8 @@ public extension AXScreenModel {
         timeout _: Measurement<UnitDuration> = .seconds(10),
         file: StaticString = #file,
         line: UInt = #line
-    ) async -> XCUIElement where Screen: AXScreenModel {
-        let element = assumedElement(path, file: file, line: line)
+    ) async throws -> XCUIElement where Screen: AXScreen {
+        let element = try assumedElement(path, file: file, line: line)
         return element
     }
 
@@ -22,13 +22,13 @@ public extension AXScreenModel {
         _ path: KeyPath<Self, AXTabComponent<Screen>>,
         file: StaticString = #file,
         line: UInt = #line
-    ) -> XCUIElement where Screen: AXScreenModel {
+    ) throws -> XCUIElement where Screen: AXScreen {
         let component = Self()[keyPath: path]
         let index = Int(component.index)
 
         let tabItems = XCUIApplication().tabBars.buttons
         if !(0 ..< tabItems.count).contains(index) {
-            XCTFail("\"\(component.name)\" tab not found", file: file, line: line)
+            throw AXFailure("\"\(component.name)\" tab not found", file: file, line: line)
         }
         let element = tabItems.element(boundBy: index)
         return element

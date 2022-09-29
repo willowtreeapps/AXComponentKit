@@ -7,19 +7,19 @@ extension FirstTabScreen {
     static func navigateToDetailScreen(
         file: StaticString = #file,
         line: UInt = #line
-    ) async -> ScreenModelNavigator<DetailScreen> {
-        await Navigator().navigateToDetailScreen(file: file, line: line)
+    ) async throws -> AXScreenNavigator<DetailScreen> {
+        try await Navigator().navigateToDetailScreen(file: file, line: line)
     }
 }
 
-extension ScreenModelNavigator where Source == FirstTabScreen {
+extension AXScreenNavigator where Source == FirstTabScreen {
     @discardableResult
     func navigateToDetailScreen(
         file: StaticString = #file,
         line: UInt = #line
-    ) async -> ScreenModelNavigator<DetailScreen> {
-        await performNavigation(file: file, line: line) { screen in
-            await screen.element(\.detailButton).tap()
+    ) async throws -> AXScreenNavigator<DetailScreen> {
+        try await performNavigation(file: file, line: line) { screen in
+            try await screen.element(\.detailButton).tap()
         }
     }
 }

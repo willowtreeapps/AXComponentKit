@@ -15,13 +15,13 @@ private struct ScreenIdentityModifier: ViewModifier {
 public extension View {
     /// Sets the `ScreenIdentifier` on a view, which is used to
     /// verify the app's location defined in
-    /// `ScreenModelNavigator.performNavigation(...`.
+    /// `AXScreenNavigator.performNavigation(...`.
     ///
     /// This modifier should be set only on views that act as a viewController/"screen"
     /// and is not intended for use on contained views.
     func automationScreen<Model>(
         _ modelType: Model.Type
-    ) -> some View where Model: AXScreenModel {
+    ) -> some View where Model: AXScreen {
         modifier(ScreenIdentityModifier(identifier: modelType.screenIdentifier))
     }
 }

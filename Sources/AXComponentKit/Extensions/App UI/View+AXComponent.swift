@@ -3,7 +3,7 @@ import SwiftUI
 public extension View {
     func automationComponent<Model>(
         _ path: KeyPath<Model, AXComponent>
-    ) -> some View where Model: AXScreenModel {
+    ) -> some View where Model: AXScreen {
         accessibilityIdentifier(Model()[keyPath: path].id)
     }
 
@@ -17,7 +17,7 @@ public extension View {
 public extension View {
     func automationScrollView<Model>(
         _ path: KeyPath<Model, AXScrollView>
-    ) -> some View where Model: AXScreenModel {
+    ) -> some View where Model: AXScreen {
         accessibilityIdentifier(Model()[keyPath: path].id)
             .accessibilityElement(children: .contain)
     }

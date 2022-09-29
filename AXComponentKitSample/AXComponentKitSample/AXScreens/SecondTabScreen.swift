@@ -1,7 +1,7 @@
 import AXComponentKit
 import Foundation
 
-struct SecondTabScreen: AXScreenModel {
+struct SecondTabScreen: AXScreen {
     static let screenIdentifier = "second-tab-screen"
 
     let table: AXScrollView = "second-table-table-view"

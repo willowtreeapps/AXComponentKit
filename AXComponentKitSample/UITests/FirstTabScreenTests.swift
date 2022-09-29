@@ -3,14 +3,16 @@ import XCTest
 
 @MainActor
 final class UITests: XCTestCase {
-    override func setUp() {
-        XCUIApplication().launch()
+    override func setUp(completion: @escaping (Error?) -> Void) {
+        setUp(completion: completion) {
+            XCUIApplication().launch()
+        }
     }
 
-    func testFirstPageElementsExist() async {
-        await FirstTabScreen.exists()
+    func testFirstPageElementsExist() async throws {
+        try await FirstTabScreen.exists()
 
-        await FirstTabScreen.element(\.detailButton)
+        try await FirstTabScreen.element(\.detailButton)
 
         let button = FirstTabScreen.assumedElement(\.detailButton)
 
@@ -19,7 +21,7 @@ final class UITests: XCTestCase {
         }
     }
 
-    func testCanNavigateToDetailScreen() async {
-        await FirstTabScreen.navigateToDetailScreen()
+    func testCanNavigateToDetailScreen() async throws {
+        try await FirstTabScreen.navigateToDetailScreen()
     }
 }

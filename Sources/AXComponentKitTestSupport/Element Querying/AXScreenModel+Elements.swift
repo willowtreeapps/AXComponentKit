@@ -3,18 +3,18 @@ import Foundation
 import XCTest
 
 @MainActor
-public extension AXScreenModel {
+public extension AXScreen {
     @discardableResult
     static func element(
         _ path: KeyPath<Self, AXComponent>,
         timeout: Measurement<UnitDuration> = .seconds(10),
         file: StaticString = #file,
         line: UInt = #line
-    ) async -> XCUIElement {
+    ) async throws -> XCUIElement {
         let identifier = Self.component(path).id
-        let element = assumedElement(matching: identifier)
+        let element = assumedElement(matching: identifier, file: file, line: line)
         let message = "Element not found with identifier: \"\(identifier)\""
-        return element.awaitingExistence(timeout: timeout, message, file: file, line: line)
+        return try element.awaitingExistence(timeout: timeout, message, file: file, line: line)
     }
 
     @discardableResult
@@ -23,10 +23,10 @@ public extension AXScreenModel {
         timeout: Measurement<UnitDuration> = .seconds(10),
         file: StaticString = #file,
         line: UInt = #line
-    ) async -> XCUIElement {
+    ) async throws -> XCUIElement {
         let identifier = Self.component(path).id
-        let element = assumedElement(matching: identifier)
+        let element = assumedElement(matching: identifier, file: file, line: line)
         let message = "Element not found with identifier: \"\(identifier)\""
-        return element.awaitingExistence(timeout: timeout, message, file: file, line: line)
+        return try element.awaitingExistence(timeout: timeout, message, file: file, line: line)
     }
 }

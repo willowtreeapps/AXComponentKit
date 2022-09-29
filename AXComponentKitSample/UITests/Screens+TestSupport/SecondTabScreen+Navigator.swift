@@ -7,23 +7,22 @@ extension SecondTabScreen {
         toItem ordinal: Int,
         file: StaticString = #file,
         line: UInt = #line
-    ) async -> ScreenModelNavigator<DetailScreen> {
-        await Navigator().navigate(toItem: ordinal, file: file, line: line)
+    ) async throws -> AXScreenNavigator<DetailScreen> {
+        try await Navigator().navigate(toItem: ordinal, file: file, line: line)
     }
 }
 
-extension ScreenModelNavigator where Source == SecondTabScreen {
+extension AXScreenNavigator where Source == SecondTabScreen {
     @discardableResult
     func navigate(
         toItem ordinal: Int,
         file: StaticString = #file,
         line: UInt = #line
-    ) async -> ScreenModelNavigator<DetailScreen> {
-        await performNavigation(file: file, line: line) { screen in
-
-            let target = screen.assumedElement(\.rowItem, value: ordinal, file: file, line: line)
-            await scroll(.down, to: target, in: \.table, timeout: .minutes(1), file: file, line: line)
-            await screen.element(\.rowItem, value: ordinal, file: file, line: line).tap()
+    ) async throws -> AXScreenNavigator<DetailScreen> {
+        try await performNavigation(file: file, line: line) { screen in
+            try await scroll(to: \.rowItem, value: ordinal, in: \.table, file: file, line: line)
+            let rowItem = try await screen.element(\.rowItem, value: ordinal, file: file, line: line)
+            rowItem.tap()
         }
     }
 }
