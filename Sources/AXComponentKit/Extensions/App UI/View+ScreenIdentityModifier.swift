@@ -19,6 +19,11 @@ public extension View {
     ///
     /// This modifier should be set only on views that act as a viewController/"screen"
     /// and is not intended for use on contained views.
+    ///
+    /// In SwiftUI, this is achieved by adding a transparent background to
+    /// the view and adding an identifier to that view. This makes the screen
+    /// identifier an additive change that should not interfere with other elements
+    /// on screen.
     func automationScreen<Model>(
         _ modelType: Model.Type
     ) -> some View where Model: AXScreen {

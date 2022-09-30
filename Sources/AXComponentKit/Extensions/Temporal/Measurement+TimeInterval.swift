@@ -11,7 +11,7 @@ public extension Measurement where UnitType == UnitDuration {
         .init(value: duration, unit: .milliseconds)
     }
 
-    /// Creates a `Measurement<UnitDuration>` from a microseconds value
+    /// Creates a `Measurement<UnitDuration>` from a microsecond value
     ///
     /// - Parameter duration: the amount of time, in microseconds
     /// - Returns: a new duration measurement
@@ -19,7 +19,7 @@ public extension Measurement where UnitType == UnitDuration {
         .init(value: duration, unit: .microseconds)
     }
 
-    /// Creates a `Measurement<UnitDuration>` from a seconds value
+    /// Creates a `Measurement<UnitDuration>` from a second value
     ///
     /// - Parameter duration: the amount of time, in seconds
     /// - Returns: a new duration measurement
@@ -27,7 +27,7 @@ public extension Measurement where UnitType == UnitDuration {
         .init(value: duration, unit: .seconds)
     }
 
-    /// Creates a `Measurement<UnitDuration>` from a minutes value
+    /// Creates a `Measurement<UnitDuration>` from a minute value
     ///
     /// - Parameter duration: the amount of time, in minutes
     /// - Returns: a new duration measurement
@@ -35,7 +35,7 @@ public extension Measurement where UnitType == UnitDuration {
         .init(value: duration, unit: .minutes)
     }
 
-    /// Creates a `Measurement<UnitDuration>` from an hours value
+    /// Creates a `Measurement<UnitDuration>` from an hour value
     ///
     /// - Parameter duration: the amount of time, in hours
     /// - Returns: a new duration measurement

@@ -1,8 +1,16 @@
 import SwiftUI
 
 public extension View {
-    // MARK: AXDynamicValue
-
+    /// Assigns an accessibility identifier according to what is defined
+    /// in the `AXDynamicComponent` identified by the given key path.
+    ///
+    /// - Parameters:
+    ///   - path:
+    ///         `KeyPath` relative to some `AXScreen` that identifies an `AXDynamicComponent`.
+    ///   - value:
+    ///         The dynamic value to use while resolving the component.
+    /// - Returns:
+    ///         The view after applying the `accessibilityIdentifier` modifier.
     func automationComponent<Model, Value>(
         _ path: KeyPath<Model, AXDynamicComponent<Value>>,
         value: Value
@@ -10,6 +18,16 @@ public extension View {
         accessibilityIdentifier(Model()[keyPath: path].resolve(value).id)
     }
 
+    /// Assigns an accessibility identifier according to what is defined
+    /// in the `AXDynamicComponent` identified by the given key path.
+    ///
+    /// - Parameters:
+    ///   - path:
+    ///         `KeyPath` relative to some `AXScreen` that identifies an `AXDynamicComponent`.
+    ///   - value:
+    ///         The dynamic value to use while resolving the component.
+    /// - Returns:
+    ///         The view after applying the `accessibilityIdentifier` modifier.
     func automationComponent<Value>(
         _ component: AXDynamicComponent<Value>,
         value: Value
@@ -19,6 +37,16 @@ public extension View {
 
     // MARK: StringProtocol
 
+    /// Assigns an accessibility identifier according to what is defined
+    /// in the `AXDynamicComponent` identified by the given key path.
+    ///
+    /// - Parameters:
+    ///   - path:
+    ///         `KeyPath` relative to some `AXScreen` that identifies an `AXDynamicComponent`.
+    ///   - value:
+    ///         The dynamic value to use while resolving the component.
+    /// - Returns:
+    ///         The view after applying the `accessibilityIdentifier` modifier.
     func automationComponent<Model, Value>(
         _ path: KeyPath<Model, AXDynamicComponent<Value>>,
         value: Value
@@ -26,6 +54,16 @@ public extension View {
         accessibilityIdentifier(Model()[keyPath: path].resolve(value).id)
     }
 
+    /// Assigns an accessibility identifier according to what is defined
+    /// in the `AXDynamicComponent` identified by the given key path.
+    ///
+    /// - Parameters:
+    ///   - path:
+    ///         `KeyPath` relative to some `AXScreen` that identifies an `AXDynamicComponent`.
+    ///   - value:
+    ///         The dynamic value to use while resolving the component.
+    /// - Returns:
+    ///         The view after applying the `accessibilityIdentifier` modifier.
     func automationComponent<Value>(
         _ component: AXDynamicComponent<Value>,
         value: Value
@@ -35,6 +73,16 @@ public extension View {
 
     // MARK: Signed Integer
 
+    /// Assigns an accessibility identifier according to what is defined
+    /// in the `AXDynamicComponent` identified by the given key path.
+    ///
+    /// - Parameters:
+    ///   - path:
+    ///         `KeyPath` relative to some `AXScreen` that identifies an `AXDynamicComponent`.
+    ///   - value:
+    ///         The dynamic value to use while resolving the component.
+    /// - Returns:
+    ///         The view after applying the `accessibilityIdentifier` modifier.
     func automationComponent<Model, Value>(
         _ path: KeyPath<Model, AXDynamicComponent<Value>>,
         value: Value
@@ -42,6 +90,16 @@ public extension View {
         accessibilityIdentifier(Model()[keyPath: path].resolve(value).id)
     }
 
+    /// Assigns an accessibility identifier according to what is defined
+    /// in the `AXDynamicComponent` identified by the given key path.
+    ///
+    /// - Parameters:
+    ///   - path:
+    ///         `KeyPath` relative to some `AXScreen` that identifies an `AXDynamicComponent`.
+    ///   - value:
+    ///         The dynamic value to use while resolving the component.
+    /// - Returns:
+    ///         The view after applying the `accessibilityIdentifier` modifier.
     func automationComponent<Value>(
         _ component: AXDynamicComponent<Value>,
         value: Value
@@ -51,6 +109,16 @@ public extension View {
 
     // MARK: Unsigned Integer
 
+    /// Assigns an accessibility identifier according to what is defined
+    /// in the `AXDynamicComponent` identified by the given key path.
+    ///
+    /// - Parameters:
+    ///   - path:
+    ///         `KeyPath` relative to some `AXScreen` that identifies an `AXDynamicComponent`.
+    ///   - value:
+    ///         The dynamic value to use while resolving the component.
+    /// - Returns:
+    ///         The view after applying the `accessibilityIdentifier` modifier.
     func automationComponent<Model, Value>(
         _ path: KeyPath<Model, AXDynamicComponent<Value>>,
         value: Value
@@ -58,6 +126,16 @@ public extension View {
         accessibilityIdentifier(Model()[keyPath: path].resolve(value).id)
     }
 
+    /// Assigns an accessibility identifier according to what is defined
+    /// in the `AXDynamicComponent` identified by the given key path.
+    ///
+    /// - Parameters:
+    ///   - path:
+    ///         `KeyPath` relative to some `AXScreen` that identifies an `AXDynamicComponent`.
+    ///   - value:
+    ///         The dynamic value to use while resolving the component.
+    /// - Returns:
+    ///         The view after applying the `accessibilityIdentifier` modifier.
     func automationComponent<Value>(
         _ component: AXDynamicComponent<Value>,
         value: Value
