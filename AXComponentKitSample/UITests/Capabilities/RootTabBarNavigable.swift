@@ -6,14 +6,14 @@ protocol RootTabBarNavigable: AXTabBarNavigable {}
 
 extension RootTabBarNavigable {
     var first: AXTabComponent<FirstTabScreen> {
-        .init(index: 0, name: "First")
+        .init(name: "First")
     }
 
     var second: AXTabComponent<SecondTabScreen> {
-        .init(index: 1, name: "Second")
+        .init(name: "Second")
     }
 
     var ghost: AXTabComponent<SecondTabScreen> {
-        .init(index: 2, name: "No u")
+        .init(name: "No u")
     }
 }
