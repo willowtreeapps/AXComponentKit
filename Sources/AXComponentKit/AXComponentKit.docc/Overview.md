@@ -1,5 +1,11 @@
 # ``AXComponentKit``
 
-Catalog sloths you find in nature and create new adorable virtual sloths.
+Modular UI testing framework abstraction that works in concert with XCTest
 
-These are the best sloths.
+
+## Topics
+
+### Essentials
+
+- <doc:Philosophy>
+- <doc:GettingStarted>
