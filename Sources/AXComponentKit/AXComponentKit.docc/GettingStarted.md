@@ -8,7 +8,7 @@ Integrating AXComponentKit in your project
 
 > Tip: AXComponentKit setup requires paying careful attention to the target when adding new files, as it is not possible to link against XCTest or anything that imports XCTest when building the app target.
 
-- Setting up screen models
+- <doc:ScreenModels>
     - Screen Identifiers
     - Defining Components
         - Static
