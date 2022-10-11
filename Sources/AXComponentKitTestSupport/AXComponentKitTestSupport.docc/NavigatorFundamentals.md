@@ -1,5 +1,5 @@
-# Navigators
-How to make tests move from one place to another
+# Navigator Fundamentals
+How tests move from one place to another
 
 ``AXScreenNavigator`` is the foundational building block for handling navigation in a UI automation test. The navigator itself is generic and takes an `AXScreenModel`, which acts as its source. Declaring a new navigator for the first tab screen in our sample app looks like this:
 ```swift
@@ -106,29 +106,3 @@ extension AXScreenNavigator where Source == <#Source#> {
     }
 }
 ```
-It will help make the boilerplate a breeze!
-
-
-##### Functionality
-
-The body and parameters of your navigation function can be practically anything needed to help make your test execution steps as succinct and atomic as possible. Let's look at the full example we started with from our example project. You'll see that it's actually pretty lean:
-
-```swift
-extension AXScreenNavigator where Source == SecondTabScreen {
-    @discardableResult
-    func navigate(
-        toItem ordinal: Int,
-        file: StaticString = #file,
-        line: UInt = #line
-    ) async throws -> AXScreenNavigator<DetailScreen> {
-        try await performNavigation(file: file, line: line) { screen in
-            try await scroll(to: \.rowItem, value: ordinal, in: \.table, file: file, line: line)
-            let rowItem = try await screen.element(\.rowItem, value: ordinal, file: file, line: line)
-            rowItem.tap()
-        }
-    }
-}
-```
-Since navigation operations are atomic, we are assured that we're on the source screen. We can focus on any and all factors that might affect the success of this operation, and ensure that it's equipped to succeed. In this example, there is no limit on the value that can be passed for `ordinal`, so we must first guarantee we can scroll down to find it in the event that the element is offscreen.
-
-These kinds of guarantees can be difficult. What if the screen is somehow scrolled down already when this executes? As written, we don't have a way to deal with that. Most of the time we simply don't have enough information to know which direction we should scroll based on what is currently visible. Perhaps a future version of the framework will allow us to be more intelligent about this, but for now we can only move in a prescribed direction.
