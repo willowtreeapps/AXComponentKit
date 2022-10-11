@@ -4,17 +4,13 @@ How to integrate AXComponentKit with SwiftUI ~and UIKit~
 
 ## Overview
 
-In traditional iOS apps, managing accessibility identifiers can be difficult and can lead to a large number of strings to manage. One of the first goals of AXComponentKit was to make a uniform pattern for dealing with these identifiers and approach the concepts of assigning identifiers and retrieving elements _with_ those identifiers in automation tests a comprehensive strategy.
-
 Screen models and navigator extensions are wonderful tools, but the view hierarchy of your application needs to be associated with the components in their relevant screen models for all of the pieces to work together. Fortunately, AXComponentKit makes this just as easy as assigning accessibility identifiers. 
 
 > Note: AXComponentKit was built with SwiftUI in mind, but all of the view modifiers presented in this guide are philosophically compatible with UIKit. More work is required to see the UIKit variants of these view modifiers come to life.
 
 ## Screen Identifiers
 
-Screens are an interesting case, so let's get those out of the way up front. In SwiftUI, the lines between "views" and "screens" are a bit more blurry than in UIKit. In SwiftUI, we suggest using your best judgement to figure out what part of your hierarchy embodies a "screen."
-
-_Strictly_ technically speaking, you could tag any view as being "the screen" so long as the view is always present no matter what happens to the contents of that screen. Since that's a complicated disclaimer, we like to think about it as simply "tag the outermost view of your screen."
+Screens are an interesting case, so let's get those out of the way up front. In SwiftUI, the lines between "views" and "screens" are a bit more blurry than in UIKit. In SwiftUI, we suggest using your best judgement to figure out what part of your hierarchy embodies a "screen." We recommend thinking about this as simply "tag the outermost view/container of your screen."
 
 Here is a gently-modified example from the sample app illustrating how to assign a screen identifier:
 
