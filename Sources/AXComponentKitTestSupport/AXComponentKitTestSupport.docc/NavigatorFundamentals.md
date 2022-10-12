@@ -51,29 +51,39 @@ Adding a new operation inside these extensions involves a decent amount of boile
 
 ```swift
 extension AXScreenNavigator where Source == SecondTabScreen {
-    @discardableResult                                                   // 1
+    @discardableResult /*1️⃣*/                                                 
     func navigate(
-        toItem index: Int,                                               // 2
-        file: StaticString = #file,                                      // 3
+        toItem index: Int, /*2️⃣*/                                             
+        file: StaticString = #file, /*3️⃣*/                                    
         line: UInt = #line
-    ) async throws -> AXScreenNavigator<DetailScreen> {                  // 4, 5
-        try await performNavigation(file: file, line: line) { _ in  // 6
+    ) async /*4️⃣*/ throws /*5️⃣*/ -> AXScreenNavigator<DetailScreen> {                  
+        try await performNavigation(file: file, line: line) /*6️⃣*/ { _ in  
             // TODO: Interact with the app
         }
     }
 }
 ```
-1. The `@discardableResult` allows us to invoke a chain of navigators without Swift forcing us to do something with the last navigator in the chain. Without it, we would have to write something like `_ = SecondTabScreen.Navigator().performNavigation(toItem: 3)`.
-    Instead, `@discardableResult` lets us ignore the fact that the function returned anything at all: `SecondTabScreen.Navigator().performNavigation(toItem: 3)`
-1. The element we're going to navigate to is an `AXDynamicComponent<Int>`, so we need to know the value in order to locate the correct row and tap on it. We'll ignore this for now since we're going to focus on the actual test interactions down below.
-1. AXComponentKit has `file` and `line` parameters tacked onto nearly every function. We recommend you pay it forward and keep these in your functions as well. When an `XCTFail` or assertion occurs down deeper in the framework, these ensure that the correct file and line number are reported as the source of failure. 
+
+- 1️⃣ The `@discardableResult` allows us to invoke a chain of navigators without Swift forcing us to do something with the last navigator in the chain: 
+```swift
+let nav = SecondTabScreen.Navigator()
+_ = nav.performNavigation(toItem: 3) // No @discardableResult
+nav.performNavigation(toItem: 3)     // ✅
+```
+
+- 2️⃣ The element we're going to navigate to is an `AXDynamicComponent<Int>`, so we need to know the value in order to locate the correct row and tap on it. We'll ignore this for now since we're going to focus on the actual test interactions down below.
+
+- 3️⃣ AXComponentKit has `file` and `line` parameters tacked onto nearly every function. We recommend you pay it forward and keep these in your functions as well. When an `XCTFail` or assertion occurs down deeper in the framework, these ensure that the correct file and line number are reported as the source of failure. 
     In practical terms, this means that an assertion failure down deep in `AXComponentKit` will report as a failure all the way up at the call site in your `XCTestCase`. 
         _insert picure_
-1. Practically all navigator operations are `async` in nature because they wait for the source/destination screens to exist, and for elements to become available. Since those tasks are asynchronous, all of our navigation operations that use then must also be asynchronous. In practice, this makes for cleaner code in test cases because it becomes much clearer _which_ operations are going to involve the passage of time.
 
-    > Note: If you are new to Swift or structured concurrency, this is what necessitates the `await` when calling async functions. The Swift [documentation](https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html) on concurrency is a great resource for more info.
-1. `throws` is similar to the `async` keyword in that nature of the functions our navigation operations are dependent on, most of those functions are also capable of throwing an error when a failure occurs. This is important because test execution won't [necessarily](https://developer.apple.com/documentation/xctest/xctestcase/1496260-continueafterfailure) stop executing simply because an assertion fails at some point in your test. By throwing when an error occurs, we have an escape hatch to abort when an expected condition is not satisfied and guarantee that the test case will not continue.
-1. `performNavigation(...)` should be present in all navigator operations because it handles the assertions around source/destination screen existence. The function returns the destination navigator when that screen appears, and Swift's implicit return values + type inference make calling the function more succinct than it would be if we wrote out everything fully:
+- 4️⃣ Practically all navigator operations are `async` in nature because they wait for the source/destination screens to exist, and for elements to become available. Since those tasks are asynchronous, all of our navigation operations that use then must also be asynchronous. In practice, this makes for cleaner code in test cases because it becomes much clearer _which_ operations are going to involve the passage of time.
+
+> Note: If you are new to Swift or structured concurrency, this is what necessitates the `await` when calling async functions. The Swift [documentation](https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html) on concurrency is a great resource for more info.
+
+- 5️⃣ Practically all navigator operations are also capable of throwing an error when a failure occurs. This is important because test execution won't [necessarily](https://developer.apple.com/documentation/xctest/xctestcase/1496260-continueafterfailure) stop executing simply because an assertion fails at some point in your test. By throwing when an error occurs, we have an escape hatch to abort when an expected condition is not satisfied and guarantee that the test case will not continue.
+
+- 6️⃣ `performNavigation(...)` should be present in all navigator operations because it handles the assertions around source/destination screen existence. The function returns the destination navigator when that screen appears, and Swift's implicit return values + type inference make calling the function more succinct than it would be if we wrote out everything fully:
 ```swift
 extension AXScreenNavigator where Source == SecondTabScreen {
     @discardableResult
