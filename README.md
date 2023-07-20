@@ -2,6 +2,6 @@
 
 See documentation:
 
-[AXComponentKit](https://jubilant-disco-651a42c5.pages.github.io/framework/documentation/axcomponentkit/)
+[AXComponentKit](https://willowtreeapps.github.io/AXComponentKit/framework/documentation/axcomponentkit/)
 
-[AXComponentKitTestSupport](https://jubilant-disco-651a42c5.pages.github.io/testing/documentation/axcomponentkittestsupport/)
+[AXComponentKitTestSupport](https://willowtreeapps.github.io/AXComponentKit/testing/documentation/axcomponentkittestsupport/)
