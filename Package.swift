@@ -20,12 +20,12 @@ let package = Package(
         .target(
             name: "AXComponentKit",
             dependencies: [],
-            exclude: ["AXComponentKit/AXComponentKit.docc"]
+            exclude: ["AXComponentKit.docc"]
         ),
         .target(
             name: "AXComponentKitTestSupport",
             dependencies: [.targetItem(name: "AXComponentKit", condition: .none)],
-            exclude: ["AXComponentKit/AXComponentKitTestSupport.docc"]
+            exclude: ["AXComponentKitTestSupport.docc"]
         ),
     ]
 )
