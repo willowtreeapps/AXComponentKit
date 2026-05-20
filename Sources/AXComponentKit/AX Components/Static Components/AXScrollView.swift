@@ -4,7 +4,7 @@ import Foundation
 /// sense. This tells `AXComponentKit` that the element in question is
 /// scrollable without forcing any heuristic to try and detect the most relevant
 /// scroll view.
-public struct AXScrollView: ExpressibleByStringLiteral {
+public struct AXScrollView: ExpressibleByStringLiteral, Sendable {
     public let id: String
 
     public init(stringLiteral value: StringLiteralType) {

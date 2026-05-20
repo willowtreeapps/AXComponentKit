@@ -5,7 +5,7 @@ import Foundation
 /// AXScreen provides a lightweight definition for what constitutes a "screen"
 /// worth of content. Each screen has an identifier to help assist with navigation
 /// while running tests.
-public protocol AXScreen {
+public protocol AXScreen: Sendable {
     /// Screen must be generically instantiable
     init()
 

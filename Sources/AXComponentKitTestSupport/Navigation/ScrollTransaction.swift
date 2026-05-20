@@ -63,13 +63,13 @@ internal struct ScrollTransaction {
         // works fine for now.
         switch direction {
         case .up:
-            self = .vertical(from: 0.25, to: 1.0)
+            self = .vertical(from: 0.3, to: 0.8)
         case .down:
-            self = .vertical(from: 0.9, to: 0.0)
+            self = .vertical(from: 0.8, to: 0.2)
         case .left:
-            self = .horizontal(from: 0.25, to: 1.0)
+            self = .horizontal(from: 0.3, to: 0.8)
         case .right:
-            self = .horizontal(from: 0.9, to: 0.0)
+            self = .horizontal(from: 0.8, to: 0.2)
         }
     }
 

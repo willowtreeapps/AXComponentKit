@@ -3,9 +3,9 @@ import Foundation
 
 /// Identifies a `TabItem` by its name, since iOS doesn't allow developers to
 /// specify accessibility identifiers for those elements.
-public struct AXTabComponent<Content> where Content: AXScreen {
+public struct AXTabComponent<Content>: Sendable where Content: AXScreen {
     /// The name of the represented tab. Must match the label of the tab at runtime.
-    let name: String
+    public let name: String
 
     /// Creates a new `AXTabComponent` with the given name
     ///

@@ -35,9 +35,9 @@ internal extension XCUIElement {
         file: StaticString = #file,
         line: UInt = #line
     ) throws -> Self {
-        if !waitForExistence(timeout: timeout.timeInterval) {
+        if !exists, !waitForExistence(timeout: timeout.timeInterval) {
             let output = message() ?? "Element not found matching identifier: \"\(identifier)\""
-            throw AXFailure(output, file: file, line: line)
+            try AXFailure.fail(output, file: file, line: line)
         }
         return self
     }

@@ -13,8 +13,12 @@ import Foundation
 ///     }
 /// }
 /// ```
-public protocol AXDynamicValue {
+public protocol AXDynamicValue: AXIdentifierConvertible {
     /// A unique value that can be used to identify a corresponding
     /// `AXComponent` at runtime
     var automationDynamicValue: String { get }
+}
+
+public extension AXDynamicValue {
+    var automationIdentifier: String { automationDynamicValue }
 }
