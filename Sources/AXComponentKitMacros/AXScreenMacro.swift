@@ -53,6 +53,7 @@ public struct AXScreenMacro: MemberMacro, ExtensionMacro {
         for argument in arguments {
             if argument.label?.trimmedDescription == "identifier",
                let stringLiteral = argument.expression.as(StringLiteralExprSyntax.self),
+               stringLiteral.segments.count == 1,
                let segment = stringLiteral.segments.first?.as(StringSegmentSyntax.self) {
                 return segment.content.text
             }

@@ -1,4 +1,5 @@
 import AXComponentKit
+import Foundation
 import XCTest
 
 public extension AXScreen {
