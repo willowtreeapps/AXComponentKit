@@ -7,6 +7,7 @@ private struct ScreenIdentityModifier: ViewModifier {
         content.background(
             Color.clear
                 .accessibilityIdentifier(identifier)
+                .accessibilityHidden(true)
         )
     }
 }
