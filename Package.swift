@@ -46,5 +46,12 @@ let package = Package(
                 "AXComponentKitMacros",
             ]
         ),
+        .testTarget(
+            name: "AXComponentKitMacrosTests",
+            dependencies: [
+                "AXComponentKitMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
     ]
 )
