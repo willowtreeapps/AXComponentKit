@@ -15,6 +15,14 @@ public struct AXScreenMacro: MemberMacro, ExtensionMacro {
             throw AXScreenMacroError.notAStruct
         }
 
+        let hasExistingIdentifier = declaration.memberBlock.members.contains { member in
+            guard let varDecl = member.decl.as(VariableDeclSyntax.self) else { return false }
+            return varDecl.bindings.contains { binding in
+                binding.pattern.as(IdentifierPatternSyntax.self)?.identifier.text == "screenIdentifier"
+            }
+        }
+        guard !hasExistingIdentifier else { return [] }
+
         let typeName = structDecl.name.trimmedDescription
         let identifier = extractIdentifier(from: node) ?? pascalCaseToKebabCase(typeName)
 
@@ -35,6 +43,7 @@ public struct AXScreenMacro: MemberMacro, ExtensionMacro {
         guard declaration.as(StructDeclSyntax.self) != nil else {
             throw AXScreenMacroError.notAStruct
         }
+        guard !protocols.isEmpty else { return [] }
 
         let extensionDecl: DeclSyntax = "extension \(type.trimmed): AXScreen {}"
         guard let ext = extensionDecl.as(ExtensionDeclSyntax.self) else {
