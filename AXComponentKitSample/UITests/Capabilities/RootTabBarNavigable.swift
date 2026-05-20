@@ -13,7 +13,12 @@ extension RootTabBarNavigable {
         .init(name: "Second")
     }
 
-    var ghost: AXTabComponent<SecondTabScreen> {
-        .init(name: "No u")
+    var settings: AXTabComponent<SettingsScreen> {
+        .init(name: "Settings")
     }
+
+    var catalog: AXTabComponent<CatalogScreen> {
+        .init(name: "Catalog")
+    }
+
 }

@@ -1,8 +1,7 @@
 import AXComponentKit
-import Foundation
+import AXComponentKitMacroSupport
 
-struct DetailScreen: AXScreen {
-    static let screenIdentifier = "detail-screen"
-
+@AXScreen
+struct DetailScreen {
     let contentLabel: AXComponent = "content-label"
 }
