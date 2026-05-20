@@ -4,7 +4,7 @@ import Foundation
 /// an application's view hierarchy. This represents an element with
 /// a fully qualified identifier, be it a static element that is predefined,
 /// or the result of resolving an `AXDynamicComponent` with some value.
-public struct AXComponent: ExpressibleByStringLiteral {
+public struct AXComponent: ExpressibleByStringLiteral, Sendable {
     /// The identifier for the component
     public let id: String
 

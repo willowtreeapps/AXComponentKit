@@ -1,9 +1,8 @@
 import AXComponentKit
-import Foundation
+import AXComponentKitMacroSupport
 
-struct SecondTabScreen: AXScreen {
-    static let screenIdentifier = "second-tab-screen"
-
+@AXScreen
+struct SecondTabScreen {
     let table: AXScrollView = "second-table-table-view"
     let rowItem: AXDynamicComponent<Int> = "second-tab-dynamic-row"
 }

@@ -10,9 +10,9 @@ import Foundation
 /// may not be knowable at compile-time. For example, list rows can have
 /// fully unique identifiers for each row if the `Value` is something unique
 /// such as a row index, or model object UUID.
-public struct AXDynamicComponent<Value>: ExpressibleByStringLiteral {
+public struct AXDynamicComponent<Value: AXIdentifierConvertible>: ExpressibleByStringLiteral, Sendable {
     /// The static prefix for this component
-    internal let prefix: String
+    public let prefix: String
 
     /// Creates a new `AXDynamicComponent` with the given prefix,
     /// which will be dynamically concatenated to a suffix at runtime.
@@ -36,7 +36,7 @@ public struct AXDynamicComponent<Value>: ExpressibleByStringLiteral {
     }
 }
 
-public extension AXDynamicComponent where Value: AXDynamicValue {
+public extension AXDynamicComponent {
     /// Resolves an `AXComponent` by combining the existing prefix
     /// with the provided suffix.
     ///
@@ -45,45 +45,6 @@ public extension AXDynamicComponent where Value: AXDynamicValue {
     /// - Returns:
     ///         A new, fully qualified `AXComponent`
     func resolve(_ suffix: Value) -> AXComponent {
-        resolve(with: suffix.automationDynamicValue)
-    }
-}
-
-public extension AXDynamicComponent where Value: StringProtocol {
-    /// Resolves an `AXComponent` by combining the existing prefix
-    /// with the provided suffix.
-    ///
-    /// - Parameter suffix:
-    ///         The trailing end of the computed identifier
-    /// - Returns:
-    ///         A new, fully qualified `AXComponent`
-    func resolve(_ suffix: Value) -> AXComponent {
-        resolve(with: String(suffix))
-    }
-}
-
-public extension AXDynamicComponent where Value: SignedInteger {
-    /// Resolves an `AXComponent` by combining the existing prefix
-    /// with the provided suffix.
-    ///
-    /// - Parameter suffix:
-    ///         The trailing end of the computed identifier
-    /// - Returns:
-    ///         A new, fully qualified `AXComponent`
-    func resolve(_ suffix: Value) -> AXComponent {
-        resolve(with: String(suffix))
-    }
-}
-
-public extension AXDynamicComponent where Value: UnsignedInteger {
-    /// Resolves an `AXComponent` by combining the existing prefix
-    /// with the provided suffix.
-    ///
-    /// - Parameter suffix:
-    ///         The trailing end of the computed identifier
-    /// - Returns:
-    ///         A new, fully qualified `AXComponent`
-    func resolve(_ suffix: Value) -> AXComponent {
-        resolve(with: String(suffix))
+        resolve(with: suffix.automationIdentifier)
     }
 }

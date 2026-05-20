@@ -1,23 +1,21 @@
 import Foundation
 import XCTest
 
-/// An easy to throw error that can be caught by XCTest automatically
-/// while also reporting a test failure at the specified file and line
-final class AXFailure: NSError {
-    /// Creates a new error that will fail at the given file/line with
-    /// the specified message
-    ///
-    /// - Parameters:
-    ///   - message:
-    ///         The message to display as the failure description
-    ///   - file:
-    ///         The file to present an error in if a failure occurs.
-    ///         The default is the filename of the test case where you call this function.
-    ///   - line:
-    ///         The line number to present an error on if a failure occurs.
-    ///         The default is the line number of the test case where you call this function.
+/// A test failure error that carries source location for call-site attribution.
+///
+/// `AXFailure` does not call `XCTFail` in its initializer — failure recording
+/// happens at the throw site so that caught errors do not produce spurious
+/// test failures.
+///
+/// `@unchecked Sendable` is safe: all stored properties (`StaticString`, `UInt`)
+/// are immutable value types, and `NSError` is itself `@unchecked Sendable`.
+final class AXFailure: NSError, @unchecked Sendable {
+    let sourceFile: StaticString
+    let sourceLine: UInt
+
     init(_ message: String, file: StaticString, line: UInt) {
-        XCTFail(message, file: file, line: line)
+        self.sourceFile = file
+        self.sourceLine = line
         super.init(
             domain: "com.axcomponentkit.testsupport",
             code: 1,
@@ -30,5 +28,18 @@ final class AXFailure: NSError {
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError()
+    }
+}
+
+extension AXFailure {
+    /// Records the failure via `XCTFail` and throws. Call this instead of
+    /// constructing + throwing separately so the failure is reported exactly once.
+    @MainActor static func fail(
+        _ message: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws -> Never {
+        XCTFail(message, file: file, line: line)
+        throw AXFailure(message, file: file, line: line)
     }
 }

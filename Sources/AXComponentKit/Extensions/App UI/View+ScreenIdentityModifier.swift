@@ -6,8 +6,8 @@ private struct ScreenIdentityModifier: ViewModifier {
     func body(content: Content) -> some View {
         content.background(
             Color.clear
-                .accessibilityElement(children: .contain)
                 .accessibilityIdentifier(identifier)
+                .accessibilityHidden(true)
         )
     }
 }
@@ -15,7 +15,7 @@ private struct ScreenIdentityModifier: ViewModifier {
 public extension View {
     /// Sets the `ScreenIdentifier` on a view, which is used to
     /// verify the app's location defined in
-    /// `AXScreenNavigator.performNavigation(...`.
+    /// `AXScreenNavigator.navigate(...`.
     ///
     /// This modifier should be set only on views that act as a viewController/"screen"
     /// and is not intended for use on contained views.

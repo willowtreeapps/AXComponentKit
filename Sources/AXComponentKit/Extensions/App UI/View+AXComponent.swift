@@ -23,7 +23,7 @@ public extension View {
     ///         An `AXComponent` that provides an identity for the modified view.
     /// - Returns:
     ///         The view after applying the `accessibilityIdentifier` modifier.
-    func automationComponent(_ component: AXComponent?) -> some View {
-        accessibilityIdentifier(component?.id ?? "undefined")
+    func automationComponent(_ component: AXComponent) -> some View {
+        accessibilityIdentifier(component.id)
     }
 }

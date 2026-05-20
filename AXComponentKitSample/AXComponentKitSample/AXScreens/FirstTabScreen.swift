@@ -1,8 +1,7 @@
 import AXComponentKit
-import Foundation
+import AXComponentKitMacroSupport
 
-struct FirstTabScreen: AXScreen {
-    static let screenIdentifier = "first-tab-screen"
-
+@AXScreen
+struct FirstTabScreen {
     let detailButton: AXComponent = "first-tab-screen-detail-button"
 }

@@ -11,6 +11,14 @@ struct ContentView: View {
                 .tabItem {
                     Label("Second", systemImage: "circle")
                 }
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
+            CatalogView()
+                .tabItem {
+                    Label("Catalog", systemImage: "square.grid.2x2")
+                }
         }
     }
 }

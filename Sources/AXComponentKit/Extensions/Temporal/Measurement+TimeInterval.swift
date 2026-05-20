@@ -1,7 +1,5 @@
 import Foundation
 
-extension Measurement: Sendable {}
-
 public extension Measurement where UnitType == UnitDuration {
     /// Creates a `Measurement<UnitDuration>` from a millisecond value
     ///

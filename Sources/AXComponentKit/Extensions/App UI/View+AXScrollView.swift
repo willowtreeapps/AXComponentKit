@@ -16,6 +16,5 @@ public extension View {
         _ path: KeyPath<Model, AXScrollView>
     ) -> some View where Model: AXScreen {
         accessibilityIdentifier(Model()[keyPath: path].id)
-            .accessibilityElement(children: .contain)
     }
 }

@@ -1,26 +1,26 @@
 # Navigator Fundamentals
 How tests move from one place to another
 
-``AXScreenNavigator`` is the foundational building block for handling navigation in a UI automation test. The navigator itself is generic and takes an `AXScreenModel`, which acts as its source. Declaring a new navigator for the first tab screen in our sample app looks like this:
+``AXScreenNavigator`` is the foundational building block for handling navigation in a UI automation test. The navigator itself is generic and takes an ``AXScreen``, which acts as its source. Declaring a new navigator for the first tab screen in our sample app looks like this:
 ```swift
 let navigator = AXScreenNavigator<FirstTabScreen>()
 ```
 
-We usually read this as "A navigator starting at FirstTabScreen." Alternatively, `AXComponentKit` includes a typealias on `AXScreen` that makes it possible to get the navigator for a given screen like this:
+We usually read this as "A navigator starting at FirstTabScreen." Alternatively, `AXComponentKit` includes a `navigator` computed property on `AXScreen` that returns a navigator for that screen type — this is the preferred form:
 ```swift
-let navigator = FirstTabScreen.Navigator() // AXScreenNavigator<FirstTabScreen>
+let navigator = FirstTabScreen.navigator // AXScreenNavigator<FirstTabScreen>
 ```
-Most places create navigator instances in this way because it's more concise, but both are valid constructions that mean the same thing.
+Most places create navigator instances in this way because it's more concise. The explicit `Navigator()` constructor is also valid and means the same thing.
 
 A navigator allows the test runner to begin at the source screen and perform some operation to move to a destination screen. Here's an example from our sample app that starts at the first tab's screen and navigates to the second tab:
 ```swift
-try await FirstTabScreen.navigate(toTab: \.second)
+try await FirstTabScreen.navigator.navigate(toTab: \.second)
 ```
 
 Every operation that a navigator can perform returns a new navigator instance for the destination screen. This is where navigator composition becomes really powerful, as seen here, where we move to the second tab and then immediately navigate to the third item in the list:
 
 ```swift
-try await FirstTabScreen.navigate(toTab: \.second) // AXScreenNavigator<SecondTabScreen>
+try await FirstTabScreen.navigator.navigate(toTab: \.second) // AXScreenNavigator<SecondTabScreen>
                         .navigate(toItem: 3)       // AXScreenNavigator<DetailScreen>
 ```
 
@@ -28,20 +28,13 @@ try await FirstTabScreen.navigate(toTab: \.second) // AXScreenNavigator<SecondTa
 
 ### Adding New Navigator Operations
 
-Adding new operations to ``AXScreenNavigator`` is similar to how we add capabilities to `AXScreenModel`s. Protocol extensions allow us to add operations to navigators that have a specific source screen. This means that operations we define for `SecondTabScreen` cannot show up on a navigator that starts on `FirstTabScreen`. Here's an example of how a new navigator extension is declared:
+Adding new operations to ``AXScreenNavigator`` is done through protocol extensions that constrain to a specific source screen. This means that operations we define for `SecondTabScreen` cannot show up on a navigator that starts on `FirstTabScreen`. Here's an example of how a new navigator extension is declared:
 
 ```swift
-// Swift < 5.7
-extension AXScreenModel where Source == SecondTabScreen {
-    ...
-}
-
-// Swift 5.7+
-extension AXScreenModel<SecondTabScreen> {
+extension AXScreenNavigator where Source == SecondTabScreen {
     ...
 }
 ```
-> Note: For the sake of compatability and better compile times, we use pre-5.7 Swift syntax.
 
 > Warning: When adding new `AXScreenNavigator` extensions, be sure they are being added to your UI testing target ONLY. `AXScreenNavigator` relies on the `XCTest` framework, which is not available for standard application code.
 
@@ -57,7 +50,7 @@ extension AXScreenNavigator where Source == SecondTabScreen {
         file: StaticString = #file, /*3️⃣*/                                    
         line: UInt = #line
     ) async /*4️⃣*/ throws /*5️⃣*/ -> AXScreenNavigator<DetailScreen> {                  
-        try await performNavigation(file: file, line: line) /*6️⃣*/ { _ in  
+        try await navigate(file: file, line: line) /*6️⃣*/ { _ in  
             // TODO: Interact with the app
         }
     }
@@ -66,9 +59,9 @@ extension AXScreenNavigator where Source == SecondTabScreen {
 
 - 1️⃣ The `@discardableResult` allows us to invoke a chain of navigators without Swift forcing us to do something with the last navigator in the chain: 
 ```swift
-let nav = SecondTabScreen.Navigator()
-_ = nav.performNavigation(toItem: 3) // No @discardableResult
-nav.performNavigation(toItem: 3)     // ✅
+let nav = SecondTabScreen.navigator
+_ = nav.navigate(toItem: 3) // No @discardableResult
+nav.navigate(toItem: 3)     // ✅
 ```
 
 - 2️⃣ The element we're going to navigate to is an `AXDynamicComponent<Int>`, so we need to know the value in order to locate the correct row and tap on it. We'll ignore this for now since we're going to focus on the actual test interactions down below.
@@ -85,7 +78,7 @@ nav.performNavigation(toItem: 3)     // ✅
 > Important: Due to a bug in the XCTest framework, async tests within an XCTestCase do not support `continueAfterFailure = false`. Once this bug is fixed in a future version of Xcode, AXComponentKit will likely move away from making functions throw and reduce duplicated diagnostics.
 
 
-- 6️⃣ `performNavigation(...)` should be present in all navigator operations because it handles the assertions around source/destination screen existence. The function returns the destination navigator when that screen appears, and Swift's implicit return values + type inference make calling the function more succinct than it would be if we wrote out everything fully:
+- 6️⃣ `navigate(...)` should be present in all navigator operations because it handles the assertions around source/destination screen existence. The function returns the destination navigator when that screen appears, and Swift's implicit return values + type inference make calling the function more succinct than it would be if we wrote out everything fully:
 ```swift
 extension AXScreenNavigator where Source == SecondTabScreen {
     @discardableResult
@@ -94,7 +87,7 @@ extension AXScreenNavigator where Source == SecondTabScreen {
         file: StaticString = #file,
         line: UInt = #line
     ) async throws -> AXScreenNavigator<DetailScreen> {
-        return try await performNavigation(to: DetailScreen.self, file: file, line: line) { _ in
+        return try await navigate(to: DetailScreen.self, file: file, line: line) { _ in
             // TODO: Interact with the app
         }
     }
@@ -112,7 +105,7 @@ extension AXScreenNavigator where Source == <#Source#> {
         file: StaticString = #file,
         line: UInt = #line
     ) async throws -> AXScreenNavigator<<#Destination#>> {
-        try await performNavigation(file: file, line: line) { screen in
+        try await navigate(file: file, line: line) { screen in
             <#Body#>
         }
     }

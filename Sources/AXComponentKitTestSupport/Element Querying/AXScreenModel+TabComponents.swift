@@ -79,7 +79,7 @@ public extension AXScreen {
         line _: UInt = #line
     ) -> XCUIElement where Screen: AXScreen {
         let component = Self()[keyPath: path]
-        let predicate = NSPredicate(format: "label LIKE[c] '\(component.name)'")
+        let predicate = NSPredicate(format: "label ==[c] %@", component.name)
         let tabItem = XCUIApplication().tabBars.buttons.matching(predicate).firstMatch
         return tabItem
     }

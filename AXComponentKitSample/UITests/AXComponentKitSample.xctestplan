@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "1C548B71-6FE2-41C8-9A43-DC65A35E973A",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "performanceAntipatternCheckerEnabled" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:AXComponentKitSample.xcodeproj",
+      "identifier" : "6B53ED9F28D512A500D8B1FC",
+      "name" : "AXComponentKitSample"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:AXComponentKitSample.xcodeproj",
+        "identifier" : "6B53EDB728D5133000D8B1FC",
+        "name" : "UITests"
+      }
+    }
+  ],
+  "version" : 1
+}
