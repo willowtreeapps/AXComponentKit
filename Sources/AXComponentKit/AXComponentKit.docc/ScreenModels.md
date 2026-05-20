@@ -10,12 +10,36 @@ The Screen Model is a container for components that exist within "a screen full"
 
 Screen models in `AXComponentKit` rely heavily on protocols. For something to be "a screen," the only requirement is that it conforms to ``AXScreen``. Additional protocols can (and should!) be created as part of your test target that allow your screen to adopt additional capabilities. More on that _here_ (link).
 
-Here is how we define the initial screen in our sample app, without any of its components, and without satisfying the requirements of ``AXScreen``:
+### Using the `@AXScreen` Macro
+
+The recommended way to declare a screen model is with the `@AXScreen` macro. It synthesizes the ``AXScreen`` conformance and a `screenIdentifier` automatically by converting your struct name from PascalCase to kebab-case:
+
+```swift
+@AXScreen
+struct FirstTabScreen {
+    // screenIdentifier = "first-tab-screen" (auto-generated)
+}
+```
+
+You can also supply a custom identifier if the auto-derived one doesn't suit your needs:
+
+```swift
+@AXScreen(identifier: "my-custom-screen-id")
+struct FirstTabScreen {}
+```
+
+> Note: `@AXScreen` can only be applied to a `struct`. If you need class-based semantics, conform to ``AXScreen`` manually.
+
+### Manual Conformance
+
+If you prefer not to use the macro, you can conform to ``AXScreen`` directly. Here is how we define the initial screen in our sample app without any of its components:
+
 ```swift
 struct FirstTabScreen: AXScreen {
     // TODO: Fulfill protocol requirements
 }
 ```
+
 > Note: ``AXScreen`` requires an `init()` initializer, which is synthesized by the compiler automatically if all properties have an initial default value. All screen models in the sample project rely on the compiler to provide this initializer.
 
 ### Screen Identifiers
@@ -24,7 +48,7 @@ From a test automation perspective, being able to ask the question "what screen 
 
 To facilitate this, every screen model must provide a `screenIdentifier` that should uniquely identify that screen. As of now, these are static identifiers and there is not a mechanism for dynamic variation in the spirit of ``AXComponent``.
 
-Fulfilling this requirement for our example screen looks something like this:
+Fulfilling this requirement manually for our example screen looks something like this:
 ```swift
 struct FirstTabScreen: AXScreen {
     static let screenIdentifier = "first-tab-screen"
@@ -83,7 +107,7 @@ By default, ``AXDynamicComponent`` has support for Swift's signed and unsigned i
 
 #### Custom Types
 
-``AXDynamicComponent`` can also support identifiers that are generated based on custom types not natively supported by `AXComponentKit`. Custom types that conform to the ``AXDynamicValue`` protocol can work just as effortlessly as the default types listed above.
+``AXDynamicComponent`` can also support identifiers that are generated based on custom types not natively supported by `AXComponentKit`. The underlying requirement is conformance to ``AXIdentifierConvertible``, which has a single requirement: an `automationIdentifier: String` property. The higher-level ``AXDynamicValue`` protocol refines ``AXIdentifierConvertible`` and is what custom types should conform to — it is the standard extension point for user-defined types.
 
 Here is an example of a custom type being defined and used in a contrived example:
 

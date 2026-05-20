@@ -73,6 +73,34 @@ struct SecondTabView: View {
 }
 ```
 
+#### Optional Dynamic Values
+
+When a dynamic value may be `nil` — for example, during a loading or placeholder state — use the optional-value overload. When the value is `nil`, no accessibility identifier is applied and the element is invisible to automation queries:
+
+```swift
+struct SecondTabView: View {
+
+    let items: [Item]   // Item.id may be nil during loading
+
+    var body: some View {
+        List(items) { item in
+            Text(item.title)
+                .automationComponent(\SecondTabScreen.rowItem, value: item.id)
+        }
+    }
+}
+```
+
+#### Prefixed Dynamic Components
+
+To distinguish elements that share a component definition but represent a different semantic state, supply a custom prefix. The identifier becomes `"{prefix}-{componentPrefix}_{value}"`:
+
+```swift
+Text(item.title)
+    .automationComponent(\SecondTabScreen.rowItem, value: item.index, prefix: "featured")
+// identifier: "featured-second-tab-dynamic-row_3"
+```
+
 #### Scrollview Components
 
 Adding an additional line to the example from above, we can declare the scroll view that houses all row elements.
@@ -91,3 +119,41 @@ struct SecondTabView: View {
     }
 }
 ```
+
+## Animation Suppression
+
+UI tests are significantly more reliable when animations are disabled. AXComponentKit provides first-class support for this that activates only when the automation runner is present — it is a no-op in production builds.
+
+### SwiftUI Apps
+
+Apply the `.automationOptimized()` modifier at your app's root view. It disables SwiftUI transaction animations and calls into `AnimationSuppressor` to handle UIKit and Core Animation layers as well.
+
+```swift
+@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .automationOptimized()
+        }
+    }
+}
+```
+
+### UIKit and Hybrid Apps
+
+For apps with a UIKit `AppDelegate` (or a hybrid UIKit+SwiftUI app where the root window is managed by UIKit), call `AXAutomation.suppressAnimationsIfNeeded()` from `application(_:didFinishLaunchingWithOptions:)`:
+
+```swift
+func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+) -> Bool {
+    Task { @MainActor in
+        AXAutomation.suppressAnimationsIfNeeded()
+    }
+    return true
+}
+```
+
+> Note: `suppressAnimationsIfNeeded()` is `@MainActor`-isolated. Call it from a `Task { @MainActor in … }` block if your launch method is not already on the main actor. It disables `UIView` animations globally and sets `CALayer.speed = 100` on every new window as it becomes visible, which collapses Core Animation durations to near-zero.
